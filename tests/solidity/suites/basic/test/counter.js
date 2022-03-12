@@ -25,15 +25,11 @@ contract('Counter', (accounts) => {
 
     console.log('Current eth:')
     console.log('  - ', await web3.eth.getBalance(one))
-    console.log('  - ', await web3.eth.getBalance(two))
-    console.log('  - ', await web3.eth.getBalance(three))
     console.log('')
   })
 
   it('should add', async () => {
     const balanceOne = await web3.eth.getBalance(one)
-    const balanceTwo = await web3.eth.getBalance(two)
-    const balanceThree = await web3.eth.getBalance(three)
 
     let count
 
@@ -42,18 +38,6 @@ contract('Counter', (accounts) => {
     console.log(count.toString())
     assert.equal(count, '1', 'Counter should be 1')
     assert.notEqual(balanceOne, await web3.eth.getBalance(one), `${one}'s balance should be different`)
-
-    await counter.add({ from: two })
-    count = await counter.getCounter()
-    console.log(count.toString())
-    assert.equal(count, '2', 'Counter should be 2')
-    assert.notEqual(balanceTwo, await web3.eth.getBalance(two), `${two}'s balance should be different`)
-
-    await counter.add({ from: three })
-    count = await counter.getCounter()
-    console.log(count.toString())
-    assert.equal(count, '3', 'Counter should be 3')
-    assert.notEqual(balanceThree, await web3.eth.getBalance(three), `${three}'s balance should be different`)
   })
 
   it('should subtract', async () => {

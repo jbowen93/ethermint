@@ -1,4 +1,5 @@
-pragma solidity 0.4.24;
+pragma solidity >=0.4.24 <0.9.0;
+
 
 import "../DepositableDelegateProxy.sol";
 
@@ -14,11 +15,11 @@ contract DepositableDelegateProxyMock is DepositableDelegateProxy {
         implementationMock = _implementationMock;
     }
 
-    function implementation() public view returns (address) {
+    function implementation() override public view returns (address) {
         return implementationMock;
     }
 
-    function proxyType() public pure returns (uint256 proxyTypeId) {
+    function proxyType() override public pure returns (uint256 proxyTypeId) {
         return UPGRADEABLE;
     }
 }

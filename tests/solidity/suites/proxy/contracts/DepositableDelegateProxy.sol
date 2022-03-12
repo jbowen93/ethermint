@@ -1,13 +1,13 @@
-pragma solidity 0.4.24;
+pragma solidity >=0.4.24 <0.9.0;
 
 import "./DelegateProxy.sol";
 import "./DepositableStorage.sol";
 
 
-contract DepositableDelegateProxy is DepositableStorage, DelegateProxy {
+abstract contract DepositableDelegateProxy is DepositableStorage, DelegateProxy {
     event ProxyDeposit(address sender, uint256 value);
 
-    function () external payable {
+    receive () external payable {
         uint256 forwardGasThreshold = FWD_GAS_LIMIT;
         bytes32 isDepositablePosition = DEPOSITABLE_POSITION;
 
@@ -16,16 +16,16 @@ contract DepositableDelegateProxy is DepositableStorage, DelegateProxy {
         assembly {
             // Continue only if the gas left is lower than the threshold for forwarding to the implementation code,
             // otherwise continue outside of the assembly block.
-            if lt(gas, forwardGasThreshold) {
+            if lt(gas(), forwardGasThreshold) {
                 // Only accept the deposit and emit an event if all of the following are true:
                 // the proxy accepts deposits (isDepositable), msg.data.length == 0, and msg.value > 0
-                if and(and(sload(isDepositablePosition), iszero(calldatasize)), gt(callvalue, 0)) {
+                if and(and(sload(isDepositablePosition), iszero(calldatasize())), gt(callvalue(), 0)) {
                     // Equivalent Solidity code for emitting the event:
                     // emit ProxyDeposit(msg.sender, msg.value);
 
                     let logData := mload(0x40) // free memory pointer
-                    mstore(logData, caller) // add 'msg.sender' to the log data (first event param)
-                    mstore(add(logData, 0x20), callvalue) // add 'msg.value' to the log data (second event param)
+                    mstore(logData, caller()) // add 'msg.sender' to the log data (first event param)
+                    mstore(add(logData, 0x20), callvalue()) // add 'msg.value' to the log data (second event param)
 
                     // Emit an event with one topic to identify the event: keccak256('ProxyDeposit(address,uint256)') = 0x15ee...dee1
                     log1(logData, 0x40, 0x15eeaa57c7bd188c1388020bcadc2c436ec60d647d36ef5b9eb3c742217ddee1)
@@ -39,6 +39,6 @@ contract DepositableDelegateProxy is DepositableStorage, DelegateProxy {
         }
 
         address target = implementation();
-        delegatedFwd(target, msg.data);
+        delegatedFwd(target, "0x");
     }
 }

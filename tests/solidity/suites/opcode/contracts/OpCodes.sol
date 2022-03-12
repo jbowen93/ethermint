@@ -1,4 +1,4 @@
-pragma solidity >=0.4.21 <0.6.0;
+pragma solidity >=0.4.16 <0.9.0;
 
 contract Test1 {
   function isSameAddress(address a, address b) public returns(bool){  //Simply add the two arguments and return
@@ -11,7 +11,7 @@ contract OpCodes {
 
     Test1 test1;
 
-    constructor() public {  //Constructor function
+    constructor() {  //Constructor function
       test1 = new Test1();  //Create new "Test1" function
     }
 
@@ -26,7 +26,7 @@ contract OpCodes {
      /*assembly { pop(sub(dup1, mul(dup1, dup1))) }*/
 
      //keywords
-     assembly { pop(address) return(2, byte(2,1)) }
+     assembly { pop(address()) return(2, byte(2,1)) }
 
      //label_complex
      /*assembly { 7 abc: 8 eq jump(abc) jumpi(eq(7, 8), abc) pop }
@@ -92,7 +92,7 @@ contract OpCodes {
      assembly { pop(keccak256(0,0)) }
 
      //returndatasize
-     assembly { let r := returndatasize }
+     assembly { let r := returndatasize() }
 
      //returndatacopy
      assembly { returndatacopy(64, 32, 0) }
@@ -178,9 +178,6 @@ contract OpCodes {
      //msize
      assembly {  pop(msize())}
 
-     //pc
-     assembly {  pop(pc())}
-
      //gasprice
      assembly {  pop(gasprice())}
 
@@ -262,40 +259,47 @@ contract OpCodes {
      uint256 _id = 0x420042;
 
      //log0
-     log0(
-         bytes32(0x50cb9fe53daa9737b786ab3646f04d0150dc50ef4e75f59509d83667ad5adb20)
-     );
+     assembly {
+      log0(0, 0x50cb9fe53daa9737b786ab3646f04d0150dc50ef4e75f59509d83667ad5adb20)
+     }
 
      //log1
-     log1(
-         bytes32(0x50cb9fe53daa9737b786ab3646f04d0150dc50ef4e75f59509d83667ad5adb20),
-         bytes32(0x50cb9fe53daa9737b786ab3646f04d0150dc50ef4e75f59509d83667ad5adb20)
-     );
+      assembly {
+        log1(0,
+            0x50cb9fe53daa9737b786ab3646f04d0150dc50ef4e75f59509d83667ad5adb20,
+            0x50cb9fe53daa9737b786ab3646f04d0150dc50ef4e75f59509d83667ad5adb20
+        )
+     }
 
      //log2
-     log2(
-         bytes32(0x50cb9fe53daa9737b786ab3646f04d0150dc50ef4e75f59509d83667ad5adb20),
-         bytes32(0x50cb9fe53daa9737b786ab3646f04d0150dc50ef4e75f59509d83667ad5adb20),
-         bytes32(uint256(msg.sender))
-     );
+     assembly {
+      log2(0,
+          0x50cb9fe53daa9737b786ab3646f04d0150dc50ef4e75f59509d83667ad5adb20,
+          0x50cb9fe53daa9737b786ab3646f04d0150dc50ef4e75f59509d83667ad5adb20,
+          0x50cb9fe53daa9737b786ab3646f04d0150dc50ef4e75f59509d83667ad5adb20
+      )
+     }
 
      //log3
-     log3(
-         bytes32(0x50cb9fe53daa9737b786ab3646f04d0150dc50ef4e75f59509d83667ad5adb20),
-         bytes32(0x50cb9fe53daa9737b786ab3646f04d0150dc50ef4e75f59509d83667ad5adb20),
-         bytes32(uint256(msg.sender)),
-         bytes32(_id)
-     );
+     assembly {
+      log3(0,
+          0x50cb9fe53daa9737b786ab3646f04d0150dc50ef4e75f59509d83667ad5adb20,
+          0x50cb9fe53daa9737b786ab3646f04d0150dc50ef4e75f59509d83667ad5adb20,
+          0x50cb9fe53daa9737b786ab3646f04d0150dc50ef4e75f59509d83667ad5adb20,
+          _id
+      )
+    }
 
      //log4
-     log4(
-         bytes32(0x50cb9fe53daa9737b786ab3646f04d0150dc50ef4e75f59509d83667ad5adb20),
-         bytes32(0x50cb9fe53daa9737b786ab3646f04d0150dc50ef4e75f59509d83667ad5adb20),
-         bytes32(uint256(msg.sender)),
-         bytes32(_id),
-         bytes32(_id)
-
-     );
+     assembly {
+      log4(0,
+          0x50cb9fe53daa9737b786ab3646f04d0150dc50ef4e75f59509d83667ad5adb20,
+          0x50cb9fe53daa9737b786ab3646f04d0150dc50ef4e75f59509d83667ad5adb20,
+          0x50cb9fe53daa9737b786ab3646f04d0150dc50ef4e75f59509d83667ad5adb20,
+          _id,
+          _id
+      )
+     }
 
      //selfdestruct
      assembly { selfdestruct(0x02) }

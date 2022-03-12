@@ -1,4 +1,4 @@
-pragma solidity 0.4.24;
+pragma solidity >=0.8.0;
 
 import "../Initializable.sol";
 import "../Petrifiable.sol";

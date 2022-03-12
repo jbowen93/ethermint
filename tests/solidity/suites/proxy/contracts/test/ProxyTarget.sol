@@ -1,4 +1,4 @@
-pragma solidity 0.4.24;
+pragma solidity >=0.4.24 <0.9.0;
 
 contract ProxyTargetWithoutFallback {
     event Pong();
@@ -11,7 +11,7 @@ contract ProxyTargetWithoutFallback {
 contract ProxyTargetWithFallback is ProxyTargetWithoutFallback {
     event ReceivedEth();
 
-    function () external payable {
+    receive () external payable {
       emit ReceivedEth();
     }
 }

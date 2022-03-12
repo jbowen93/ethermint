@@ -1,7 +1,5 @@
-const { usePlugin } = require('@nomiclabs/buidler/config')
-
-usePlugin("@nomiclabs/buidler-ganache")
-usePlugin('@nomiclabs/buidler-truffle5')
+require("@nomiclabs/hardhat-ganache")
+require('@nomiclabs/hardhat-truffle5')
 
 module.exports = {
   networks: {
@@ -18,11 +16,13 @@ module.exports = {
       gasPrice: 1000000000,  // 1 gwei (in wei)
     },
   },
-  solc: {
-    version: '0.4.24',
-    optimizer: {
-      enabled: true,
-      runs: 10000,
+  solidity: {
+    version: "0.8.0",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 10000,
+      },
     },
   },
 }

@@ -11,9 +11,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Clone supercharge website repository
+    - name: Clone repo
       uses: actions/checkout@v2
-    - name: Clone supercharge docs repository
+    - name: Clone ephemeral-cluster repo
       uses: actions/checkout@v2
       with:
         repository: celestiaorg/ephemeral-cluster
@@ -21,4 +21,6 @@ jobs:
         ref: main
     - name: "Setup and Test Cluster"
       run: |
+        pwd
+        ls
         ephemeral/debug-start-cluster.sh

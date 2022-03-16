@@ -20,5 +20,5 @@ jobs:
         path: ephemeral
         ref: main
     - name: "Setup and Test Cluster"
-            run: |
-              ephemeral/debug-start-cluster.sh
+      run: |
+        ephemeral/debug-start-cluster.sh

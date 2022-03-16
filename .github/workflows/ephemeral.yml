@@ -26,8 +26,9 @@ jobs:
     - name: "Setup and Test Cluster"
       run: |
         cd ephemeral
-        ls 
-        ls docker
+        echo "pwd" && pwd 
+        echo "ls" && ls 
+        echo "ls docker" && ls docker
         ./debug-start-cluster.sh 
     - name: "Test Cluster"
       run: | 

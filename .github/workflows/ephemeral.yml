@@ -19,6 +19,10 @@ jobs:
         repository: celestiaorg/ephemeral-cluster
         path: ephemeral
         ref: jbowen93/evmos
+    - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.17
     - name: "Setup and Test Cluster"
       run: |
         cd ephemeral

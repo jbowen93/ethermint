@@ -26,14 +26,15 @@ jobs:
     - name: "Setup and Test Cluster"
       run: |
         cd ephemeral
-        ./debug-start-cluster.sh
+        ls 
+        ls docker
+        ./debug-start-cluster.sh 
+    - name: "Test Cluster"
+      run: | 
         docker ps
-        echo "sleep 15"
-        sleep 15
+        echo "sleep 15" && sleep 15
         cd /home/runner/work/ethermint/ethermint
         MODE=rpc HOST=http://127.0.0.1:8545 go test ./tests/rpc/...
-    # - name: "Test Cluster"
-    #   run: | 
-    #     cd /home/runner/work/ethermint/ethermint
-    #     MODE=rpc HOST=http://127.0.0.1:8545 go test ./tests/rpc/...
+        cd /home/runner/work/ethermint/ethermint
+        MODE=rpc HOST=http://127.0.0.1:8545 go test ./tests/rpc/...
 

@@ -18,38 +18,25 @@ jobs:
       with:
         repository: celestiaorg/ephemeral-cluster
         path: ephemeral
-        ref: jbowen93/evmos
-    - name: Install Docker Compose v2
-      run: | 
-        DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
-        mkdir -p $DOCKER_CONFIG/cli-plugins
-        curl -SL https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-linux-x86_64 -o $DOCKER_CONFIG/cli-plugins/docker-compose
-        chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
+        ref: main
     - name: Set up Go
       uses: actions/setup-go@v2
       with:
         go-version: 1.17
-    - name: "Setup and Test Cluster"
-      run: |
-        cd ephemeral
-        echo "pwd" && pwd 
-        echo "ls" && ls 
-        echo "ls docker" && ls docker
-        ./debug-start-cluster.sh 
+    - name: "Setup Cluster"
+      run: ./debug-start-cluster.sh 
     - name: "Test Cluster"
       run: | 
-        echo "docker-compose -v"
-        docker-compose -v
         docker ps -a
-        echo "docker logs core0"
+        echo "------------- docker logs core0 -------------"
         docker logs core0
-        echo "docker logs bridge0"
+        echo "------------- docker logs bridge0 -------------"
         docker logs bridge0
-        echo "docker logs light0"
+        echo "------------- docker logs light0 -------------"
         docker logs light0
-        echo "docker logs dalc0"
+        echo "------------- docker logs dalc0 -------------"
         docker logs dalc0
-        echo "docker logs evmos0"
+        echo "------------- docker logs evmos0 -------------"
         docker logs evmos0
         cd /home/runner/work/ethermint/ethermint
         MODE=rpc HOST=http://127.0.0.1:8545 go test ./tests/rpc/...

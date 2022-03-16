@@ -27,8 +27,10 @@ jobs:
       run: |
         cd ephemeral
         ./debug-start-cluster.sh
-    - name: "Test Cluster"
-      run: | 
         cd /home/runner/work/ethermint/ethermint
         MODE=rpc HOST=http://127.0.0.1:8545 go test ./tests/rpc/...
+    # - name: "Test Cluster"
+    #   run: | 
+    #     cd /home/runner/work/ethermint/ethermint
+    #     MODE=rpc HOST=http://127.0.0.1:8545 go test ./tests/rpc/...
 

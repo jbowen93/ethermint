@@ -32,6 +32,8 @@ jobs:
         ./debug-start-cluster.sh 
     - name: "Test Cluster"
       run: | 
+        echo "docker-compose -v"
+        docker-compose -v
         docker ps
         echo "sleep 15" && sleep 15
         echo "docker logs core0"

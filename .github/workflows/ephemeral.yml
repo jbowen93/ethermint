@@ -21,8 +21,5 @@ jobs:
         ref: jbowen93/evmos
     - name: "Setup and Test Cluster"
       run: |
-        pwd
-        ls
-        echo "ephemeral"
-        ls ephemeral
-        ephemeral/debug-start-cluster.sh
+        cd ephemeral
+        ./debug-start-cluster.sh

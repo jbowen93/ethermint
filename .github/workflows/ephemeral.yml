@@ -34,8 +34,11 @@ jobs:
       run: | 
         docker ps
         echo "sleep 15" && sleep 15
-        cd /home/runner/work/ethermint/ethermint
-        MODE=rpc HOST=http://127.0.0.1:8545 go test ./tests/rpc/...
+        echo "docker logs core0" && docker logs evmos0
+        echo "docker logs bridge0" && docker logs evmos0
+        echo "docker logs light0" && docker logs evmos0
+        echo "docker logs dalc0" && docker logs evmos0
+        echo "docker logs evmos0" && docker logs evmos0
         cd /home/runner/work/ethermint/ethermint
         MODE=rpc HOST=http://127.0.0.1:8545 go test ./tests/rpc/...
 
